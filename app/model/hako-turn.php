@@ -13,8 +13,11 @@ require_once APP.'/model/hako-make.php';
  */
 class Turn
 {
+    /** @var Log $log */
     public $log;
+    /** @var number[] $rpx [0, 20]のユニークな順列 */
     public $rpx;
+    /** @var number[] $rpy [0, 20]のユニークな順列 */
     public $rpy;
 
     /**
@@ -70,7 +73,7 @@ class Turn
 
         // ターン差分計算のため、更新前の人口、資金、食料、ポイント情報を取得
         foreach ($order as $i) {
-            // 島凍結中はスキップ
+            // 凍結中の島はスキップ
             if ($hako->islands[$i]['keep']) {
                 continue;
             }
@@ -83,7 +86,7 @@ class Turn
 
         // 固定費 収入・消費
         foreach ($order as $i) {
-            // 管理人預かり中の場合スキップ
+            // 凍結中の島はスキップ
             if ($hako->islands[$i]['keep']) {
                 continue;
             }
@@ -92,7 +95,7 @@ class Turn
 
         // コマンド処理
         foreach ($order as $i) {
-            // 管理人預かり中の場合スキップ
+            // 凍結中の島はスキップ
             if ($hako->islands[$i]['keep']) {
                 continue;
             }
@@ -108,7 +111,7 @@ class Turn
 
         // ヘックスごとの成長・災害処理
         foreach ($order as $i) {
-            // 管理人預かり中の場合スキップ
+            // 凍結中の島はスキップ
             if ($hako->islands[$i]['keep']) {
                 continue;
             }
@@ -118,7 +121,7 @@ class Turn
         // 残存判定のために現在の島数を一時保存
         $remainNumber = $hako->islandNumber;
         foreach ($order as $i) {
-            // 管理人預かり中の場合スキップ
+            // 凍結中の島はスキップ
             if ($hako->islands[$i]['keep']) {
                 continue;
             }
