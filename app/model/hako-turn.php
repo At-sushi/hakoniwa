@@ -194,34 +194,30 @@ class Turn
     {
         global $init;
 
-        $sno = (int)$island['seichi'];
-        $point = "";
-        if ($sno > 0) {
-            if ($init->logOmit == 1) {
-                $sArray = $island['seichipnt'];
-                $i = 0;
-                for (; $i < $sno; $i++) {
-                    $spnt = $sArray[$i];
-                    if ($spnt == "") {
-                        break;
-                    }
-                    $point .= "({$spnt['x']}, {$spnt['y']}) ";
-                    // 座標の数が8で改行
-                    if (!(($i+1)%8)) {
-                        $point .= "<br>　　　"; // 全角空白３つ
-                    }
+        $number_that_flattened = (int)$island['seichi'];
+        $log_string = "";
+        if ($number_that_flattened <= 0) {
+            return;
+        }
+
+        if ($init->logOmit == 1) {
+            $coordinates_that_flattened = $island['seichipnt'];
+            for ($i = 0; $i < $number_that_flattened; $i++) {
+                $coords = $coordinates_that_flattened[$i];
+                $log_string .= "({$coords['x']}, {$coords['y']}) ";
+                // 座標の数が8で改行
+                if (!(($i+1)%8)) {
+                    $log_string .= "<br>　　　"; // 全角空白3つ
                 }
             }
-            if (($init->logOmit != 1) || $i > 1) {
-                $point .= "の<strong>{$sno}箇所</strong>";
-            }
+        } else if ($number_that_flattened >= 2) {
+            $log_string .= "の<strong>{$number_that_flattened}箇所</strong>";
         }
-        if ($point != "") {
-            if (($init->logOmit == 1) && ($sno > 1)) {
-                $this->log->landSucMatome($island['id'], $island['name'], '整地', $point);
-            } else {
-                $this->log->landSuc($island['id'], $island['name'], '整地', $point);
-            }
+
+        if (($init->logOmit == 1) && ($number_that_flattened > 1)) {
+            $this->log->landSucMatome($island['id'], $island['name'], '整地', $log_string);
+        } else {
+            $this->log->landSuc($island['id'], $island['name'], '整地', $log_string);
         }
     }
 

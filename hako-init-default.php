@@ -109,7 +109,7 @@ class InitDefault
     public $logTopTurn = 4;
     // ログファイル保持ターン数
     public $logMax = 8;
-    // 整地ログを１本化するか？(0:しない 1:座標あり 2:座標なし)
+    /** @var \integer 整地ログを束ねるか？(0:しない、1:座標あり、2:座標なし) */
     public $logOmit = 2;
 
     // 発見ログ保持行数
