@@ -47,6 +47,7 @@ class Alliance
         ];
         $is_valid = true;
 
+        // パスワードチェック
         if ($admin_mode) {/* thru */
         } elseif ($password === "") {
             $checked["pass"]["status"] = false;
@@ -58,12 +59,14 @@ class Alliance
             $is_valid = false;
         }
 
+        // 同盟名の重複はNG
         if ($this->is_duplicate_name($game, $candidate["name"])) {
             $checked["name"]["status"] = false;
             $checked["name"]["message"] = "duplicate_name";
             $is_valid = false;
         }
 
+        // 同盟徽章の重複はNG
         if ($this->is_duplicate_sign($game, $candidate["sign"])) {
             $checked["sign"]["status"] = false;
             $checked["sign"]["message"] = "duplicate_sign";
@@ -80,6 +83,7 @@ class Alliance
 
             return false;
         }
+        // 禁止語句利用のチェック
         if ($candidate["name"] === ""
             || preg_match($init->regex_denying_name_words, $candidate["name"])
             || is_match_in_array($candidate["name"], $init->denying_name_words)) {
@@ -88,12 +92,14 @@ class Alliance
             $is_valid = false;
         }
 
+        // 同盟色のバリデーション
         if (!preg_match("/^#[0-9a-fA-F]{6}$/", $candidate["color"])) {
             $checked["color"]["status"] = false;
             $checked["color"]["message"] = "illegal_color";
             $is_valid = false;
         }
 
+        // 同盟主が他の同盟に参加していないかの確認
         // [NOTE] 同盟主は他の同盟に参加できない仕様のため、すでに別の同盟に参加している時点で偽
         if (count($island["allyId"]) > 0) {
             $checked["other"]["status"] = false;
@@ -101,6 +107,7 @@ class Alliance
             $is_valid = false;
         }
 
+        // 同盟結成資金の確認
         if ($admin_mode) {/* thru */
         } elseif ($island["money"] < $init->costMakeAlly) {
             $checked["other"]["status"] = false;
@@ -133,11 +140,11 @@ class Alliance
 
     /**
      * 結成
-     * @param  [type] $game [description]
-     * @param  [type] $data [description]
-     * @return [type]       [description]
+     * @param  [type] $game ゲームデータ
+     * @param  [type] $data プレイヤー入力
+     * @return void
      */
-    public function establish(&$game, $data)
+    public function establish(&$game, $data): void
     {
         global $init;
 
@@ -787,6 +794,7 @@ class Alliance
 
     /**
      * 同盟の占有率の計算
+     * @param array &$game ゲームデータ
      */
     private function calculates_share(&$game): void
     {
