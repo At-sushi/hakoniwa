@@ -18,69 +18,72 @@ class InitDefault
      * プログラムファイルに関する設定
      */
 
-    // サイトのURL
+    /** @var string サイトのURL */
     public $baseDir = "http://localhost:8000";
 
-    // 画像を置くディレクトリ
+    /** @var string 画像を置くディレクトリ */
     public $imgDir = "public/assets/img";
 
-    // データディレクトリの名前（必ず変更してください）
+    /** @var string データディレクトリの名前（必ず変更してください） */
     public $dirName = "logs/data";
 
-    // 管理者パスワード保存先ファイル名
+    /** @var string 管理者パスワード保存先ファイル名 */
     public $passwordFile = "password.php";
 
-    // アクセスログファイルの名前
+    /** @var string アクセスログファイルの名前 */
     public $logname = "log.csv";
-    // アクセスログ最大レコード数
+    /** @var integer アクセスログ最大レコード数 */
     public $axesmax = 300;
 
     //---------------------------------------------------
     // ゲーム全般に関する設定
     //---------------------------------------------------
-    // ゲームタイトル
+    /** @var string ゲームタイトル */
     public $title      = "Re:箱庭諸島";
 
-    // 管理人の名前と連絡先
+    /** @var string 管理人の名前と連絡先 */
     public $admin_name  = "管理人";
     public $admin_address  = 'https://twitter.com/twitter';
 
-    // 1ターンが何秒か ※"10800"（3時間）より短くすることは非推奨
+    /** @var integer 1ターンが何秒か ※"10800"（3時間）より短くすることは非推奨 */
     public $unitTime = 10800;
 
-    // ターン更新時の連続更新を許可するか？(0:しない、1:する); 1にすると負荷対策になります
+    /**
+     * @var integer ターン更新時の連続更新を許可するか？(0:しない、1:する);
+     * 1にすると負荷対策になります
+     */
     public $contUpdate = 0;
 
-    // 島の最大数 （15以上に増やすとバグが生じやすくなります）
+    /** @var integer 島の最大数 （15以上に増やすとバグが生じやすくなります） */
     public $maxIsland = 15;
 
-    // 島の大きさ （20推奨。上げすぎるとデータ破損します（設計仕様））
+    /** @var integer 島の大きさ （20推奨。上げすぎるとデータ破損します（設計仕様）） */
     public $islandSize = 20;
 
-    // 初期資金
+    /** @var integer 初期資金 */
     public $initialMoney = 1000;
-    // 初期食料
+    /** @var integer 初期食料 */
     public $initialFood = 100;
-    // 初期面積（設定しない場合は0）
+    /** @var integer 初期面積（設定しない場合は0） */
     public $initialSize = 0;
-    // 初期島データ（使用しない場合は""、使用する場合は"island.txt"として島データファイルを作ってください）
+    /**
+     * @var string 初期島データ; 使用しない場合は""、
+     * 使用する場合は"island.txt"として島データファイルを作ってください）
+     */
     public $initialLand = "";
 
-    // 資金最大値
-    // バランス的に99999くらいが妥当
+    /** @var integer 資金最大値；バランス的に99999くらいが妥当 */
     public $maxMoney = 99999;
-    // 食料最大値
+    /** @var integer 食料最大値 */
     public $maxFood = 99999;
-    // 木材最大値
+    /** @var integer 木材最大値 */
     public $maxWood = 10000;
 
-    // 新規島の登録モード
-    // (0:開放、1:管理パスワード要求)
+    /** @var integer 新規島の登録モード(0:開放、1:管理パスワード要求) */
     public $registerMode = 0;
 
-    // 負荷計測するか？(0:しない、1:する)
+    /** @var integer 負荷計測するか？(0:しない、1:する) */
     public $performance = 1;
-
     // ゲームシステム用変数（編集しないこと）
     public $adminMode;
     public $CPU_start = 0;
@@ -88,42 +91,42 @@ class InitDefault
     //---------------------------------------------------
     // バックアップに関する設定
     //---------------------------------------------------
-    // バックアップを何ターンおきに取るか
+    /** @var integer バックアップを何ターンおきに取るか */
     public $backupTurn = 1;
-    // バックアップを何回分残すか（0以下だとバックアップしません）
+    /** @var integer バックアップを何回分残すか（0以下だとバックアップしない） */
     public $backupTimes = 5;
 
     //---------------------------------------------------
     // 表示に関する設定
     //---------------------------------------------------
-    // TOPページに一度に表示する島の数（0なら全島表示）
+    /** @var integer TOPページに一度に表示する島の数（0なら全島表示） */
     public $islandListRange = 10;
 
     /**
-     * #資金表示モード
-     * 0：そのまま表示、 1以上：指定された数値単位で丸める
+     * @var integer 資金表示モード；
+     * 0：そのまま表示、1以上：指定された数値単位で丸める。
      * 推奨値： 1000, 2000, 5000. デフォルト： 5000
      */
     public $moneyMode = 5000;
-    // トップページに表示するログのターン数
+    /** @var integer トップページに表示するログのターン数 */
     public $logTopTurn = 4;
-    // ログファイル保持ターン数
+    /** @var integer ログファイル保持ターン数 */
     public $logMax = 8;
-    /** @var \integer 整地ログを束ねるか？(0:しない、1:座標あり、2:座標なし) */
+    /** @var integer 整地ログを束ねるか？(0:しない、1:座標あり、2:座標なし) */
     public $logOmit = 2;
 
-    // 発見ログ保持行数
+    /** @var integer 発見ログ保持行数 */
     public $historyMax = 10;
 
-    // お知らせ
+    /** @var string お知らせ */
     public $noticeFile = "notice.txt";
-    // 記事表示部の最大の高さ。
+    /** @var integer 記事表示部の最大の高さ。 */
     public $divHeight = 150;
 
-    // 放棄コマンド自動入力ターン数
+    /** @var integer 放棄コマンド自動入力ターン数 */
     public $giveupTurn = 30;
 
-    // コマンド入力限界数
+    /** @var integer コマンド入力限界数 */
     public $commandMax = 30;
 
     //---------------------------------------------------
@@ -230,9 +233,9 @@ class InitDefault
     // 加盟・脱退をコマンドで行うようにする？(0:しない、1:する)
     public $allyJoinComUse = 0;
 
-    // 同盟に加盟することで通常災害発生確率が減少？(0:しない)
+    // 同盟参加中の通常災害発生確率
     // 対象となる災害：地震、津波、台風、隕石、巨大隕石、噴火
-    public $allyDisDown  = 0;    // 設定する場合、通常時に対する倍率を設定。(例)0.5なら半減。2なら倍増(^^;;;
+    public $allyDisDown  = 0;    // 通常時に対する倍率を設定。(例)0.5で半減、2なら倍増、0で変更なし。
     public $costMakeAlly = 1000; // 同盟の結成・変更にかかる費用
     public $costKeepAlly = 500;  // 同盟の維持費(加盟している島で均等に負担)
     public $costJoinAlly = 0; //同盟への参加費（無料の場合は0）
