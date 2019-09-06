@@ -8,10 +8,11 @@ require_once "hako-init-default.php";
 require_once "hako-init.php";
 
 /**
-* LaunchTest (Assert)
-  [NOTE] autoload より先に居ないとチェック走らす意味がないので
-         ここまではrequire地獄
-*/
+ * LaunchTest (Assert)
+ * [NOTE]
+ * autoload より先に居ないとチェック走らす意味がないので
+ * ここまではrequire地獄
+ */
 final class LaunchTest extends \Hakoniwa\Init
 {
     private $needExts = [
