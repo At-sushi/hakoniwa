@@ -15,7 +15,7 @@ require_once "config.php";
 class Init extends \Hakoniwa\InitDefault
 {
     // サイトのURL
-    public $baseDir = "http://localhost:8000";
+    public $baseDir = "http://localhost:8080";
 
     // ゲームタイトル
     public $title      = "Re:箱庭諸島";

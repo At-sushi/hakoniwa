@@ -11,3 +11,7 @@ vendor/
 *.cache
 
 \.DS_Store
+composer.lock
+package-lock.json
+
+.env

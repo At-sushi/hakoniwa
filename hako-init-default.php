@@ -19,7 +19,7 @@ class InitDefault
      */
 
     // サイトのURL
-    public $baseDir = "http://localhost:8000";
+    public $baseDir = "http://localhost:8080";
 
     // 画像を置くディレクトリ
     public $imgDir = "public/assets/img";
