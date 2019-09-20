@@ -1,3 +1,13 @@
+FROM composer/composer:master-alpine
+
+WORKDIR /var/www/html
+
+COPY ./composer.json .
+
+RUN install
+
+
+
 FROM php:7.3-fpm-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
