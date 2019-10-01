@@ -45,6 +45,7 @@ final class Island
     private $num_lottery;
     private $food;
     private $food_priv;
+    /** @var integer 人口 */
     private $population;
     private $population_priv;
     private $area;
@@ -57,11 +58,15 @@ final class Island
 
 
 
-    public function __construct($ordinal)
+    public function __construct($raw)
     {
-        // $init = new \Hakoniwa\Init;
+        $prop_list = array_keys(get_class_vars(__CLASS__));
+        foreach ($raw as $k => $v) {
+            if (!in_array($k, $prop_list)) {
+                continue;
+            }
 
-        $this->getIslandDataFromLegacyDB($ordinal);
+        }
     }
 
     public function getIslandDataFromLegacyDB(int $ordinal)
@@ -214,9 +219,23 @@ final class Island
     }
 
 
-
+    /**
+     * 収入
+     * @return void
+     */
     public function income(): void
     {
+        if ($this->is_battlefield) {
+            $this->money = \Rekoniwa::MAX_MONEY;
+            $this->food  = \Rekoniwa::MAX_FOOD;
+
+            return;
+        }
+
+        /** @var integer 農業専従者（最優先雇用） */
+        $farmer = min($this->population, $this->population_of['farmer']);
+        /** @var integer 商工業従事者 */
+        $worker = $this->population - $farmer;
     }
 
     public function expense(): void
