@@ -21,9 +21,8 @@ services:
     networks:
       - backend
     restart: always
+    volumes:
+      - .:/var/www/html
 
 networks:
   backend:
-
-volumes:
-  - .:/var/www/html

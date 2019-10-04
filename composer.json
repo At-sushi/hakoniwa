@@ -1,8 +1,6 @@
 {
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2",
         "jakub-onderka/php-console-highlighter": "*",
-        "jakub-onderka/php-parallel-lint": "^0.9",
         "phpunit/phpunit": "^7",
         "psy/psysh": "*"
     },
@@ -19,7 +17,9 @@
         "ext-zip": "*",
         "ramsey/uuid": "^3.8",
         "nelexa/zip": "*",
-        "cebe/markdown": "~1.2.0"
+        "cebe/markdown": "~1.2.0",
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "friendsofphp/php-cs-fixer": "^2.15"
     },
     "scripts": {
         "fix": "php-cs-fixer fix --allow-risky=yes",
