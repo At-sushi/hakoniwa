@@ -14,6 +14,7 @@ services:
     restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/html
   php:
     build: .
     env_file:
@@ -21,9 +22,8 @@ services:
     networks:
       - backend
     restart: always
+    volumes:
+      - .:/var/www/html
 
 networks:
   backend:
-
-volumes:
-  - .:/var/www/html
