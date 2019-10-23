@@ -3,6 +3,18 @@
 declare(strict_types=1);
 
 
+/**
+ * @param string $property getenv() の第一引数
+ * @param string|null $default $_ENV[$property] がなかったときに返す値（default: null）
+ * @return string|null
+ */
+function env(string $property, $default = null)
+{
+    $env = getenv($property);
+    return $env !== false ? $env : $default;
+}
+
+
 
 function ls(string $dir): array
 {
@@ -58,7 +70,7 @@ function println(...$strs): void
 /**
  * 文字列 $str が $prefix から始まるかどうかを返す
  * @param  string $str    検索対象
- * @param  mixed  $prefix 検索したい文字列・文字列の配列
+ * @param  string|string[]  $prefix 検索したい文字列・文字列の配列
  * @return bool
  */
 function startsWith(string $str, $prefix): bool
@@ -72,5 +84,4 @@ function startsWith(string $str, $prefix): bool
         }));
     }
     trigger_error("Arguments #1 require type of `String[] | String` (Actual `{$type}`)", E_USER_WARNING);
-    // return false;
 }
