@@ -1,7 +1,7 @@
 {
   "name": "hakoniwa",
-  "version": "1.0.0",
-  "author": "Sota SASAKI",
+  "version": "2.0.0",
+  "author": "sasaky",
   "homepage": "https://github.com/Sotalbireo/hakoniwa",
   "private": true,
   "repository": {
@@ -12,57 +12,60 @@
   "bugs": {
     "url": "https://github.com/Sotalbireo/hakoniwa/issues"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=12"
+  },
   "scripts": {
-    "compile": "webpack --color",
-    "phpfix": "run-os",
-    "phpfix:linux:darwin": "bin/composer fix",
-    "phpfix:win32": "composer fix",
-    "phplint": "run-os",
-    "phplint:linux:darwin": "bin/composer lint",
-    "phplint:win32": "composer lint",
-    "postinstall": "npm run pi -s",
-    "pi": "run-os",
-    "pi:win32": "composer install",
-    "pi:linux:darwin": "bin/composer install",
-    "server": "php -S localhost:8000 -t ./ Router.php",
-    "test": "run-os",
-    "test:win32": "npm-run-all phplint:win32 test:w:*",
-    "test:w:php": "composer test",
-    "test:linux:darwin": "npm-run-all phplint:linux:darwin test:ld:*",
-    "test:ld:php": "bin/composer test",
-    "update": "run-os",
-    "update:win32": "npm-run-all update:_w: update:w:*",
-    "update:w:autoload": "composer dump-autoload",
-    "update:linux:darwin": "npm-run-all update:ld:*",
-    "update:ld:autoload": "bin/composer dump-autoload",
-    "updatephp": "run-os",
-    "updatephp:linux:darwin": "bin/composer selfupdate && bin/composer update"
+    "dev": "cross-env NODE_ENV=development nodemon src/server/index.ts --watch src/server",
+    "build": "nuxt-ts build",
+    "start": "cross-env NODE_ENV=production ts-node src/server/index.ts",
+    "generate": "nuxt-ts generate",
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*.{ts,js,vue}": "yarn lint",
+    "*.{css,vue}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
-    "@types/jquery": "^3.3.29",
-    "axios": "^0.18.0",
-    "jquery": "^3.3.1"
+    "@feathersjs/configuration": "^2.0.6",
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
+    "@nuxt/typescript-runtime": "^0.4.1",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.0.0",
+    "vue-class-component": "^7.2.3"
   },
   "devDependencies": {
-    "@types/globule": "^1.1.3",
-    "@types/lodash": "^4.14.118",
-    "@types/webpack": "^4.4.19",
-    "apply-loader": "^2.0.0",
-    "autoprefixer": "^9.1.5",
-    "awesome-typescript-loader": "^5.2.1",
-    "cpx": "^1.5.0",
-    "del-cli": "^1.1.0",
-    "globule": "^1.2.1",
-    "lodash": "^4.17.11",
-    "npm-run-all": "^4.1.3",
-    "run-script-os": "^1.0.3",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-vue": "^0.7.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-loader": "^3.6.0",
-    "typescript": "^3.1.6",
-    "webpack": "^4.26.0"
+    "@nuxt/typescript-build": "^0.6.0",
+    "@nuxtjs/eslint-config-typescript": "^1.0.0",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/stylelint-module": "^3.1.0",
+    "@nuxtjs/tailwindcss": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.0.0",
+    "jest": "^24.1.0",
+    "lint-staged": "^10.0.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.19.1",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "stylelint": "^10.1.0",
+    "ts-jest": "^25.0.0",
+    "vue-jest": "^4.0.0-0"
   }
 }
