@@ -23,23 +23,18 @@
     </g>
   </svg>
 </template>
+<style>
+.NuxtLogo {
+  animation: 1s appear;
+  margin: auto;
+}
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-
-@Component
-export default class Logo extends Vue {}
-</script>
-
-<style lang="sass">
-.NuxtLogo
-  animation: 1s appear
-  margin: auto
-
-@keyframes appear
-  0%
-    opacity: 0
-  100%
-    opacity: 1
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>

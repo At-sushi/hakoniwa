@@ -1,7 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const nuxtConfig: Configuration = {
-  mode: 'universal',
+  mode: 'spa',
   srcDir: 'src/',
   /*
    ** Headers of the page
@@ -63,7 +63,11 @@ const nuxtConfig: Configuration = {
      ** You can extend webpack config here
      */
     // extend(config, ctx) {}
+  },
+  typescript: {
+    typeCheck: true,
+    ignoreNotFoundWarnings: true
   }
 }
 
-exports.default = nuxtConfig
+export default nuxtConfig
