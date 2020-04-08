@@ -1,0 +1,20 @@
+{
+  "rank": "順位",
+  "islandName": "島名",
+  "islandDetail": {
+    "point": "得点",
+    "population": "人口",
+    "territory": "領土",
+    "weather": "天候",
+    "bill": "資金",
+    "ration": "食料",
+    "employmentRate": "就業率",
+    "agriculture": "農業規模",
+    "industry": "工業規模",
+    "commerse": "商業規模",
+    "mine": "採掘業規模",
+    "powerhouse": "発電規模",
+    "powersupplyRate": "電力供給率",
+    "satelites": "衛星"
+  }
+}

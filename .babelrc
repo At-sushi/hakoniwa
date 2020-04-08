@@ -12,5 +12,13 @@
         ]
       ]
     }
-  }
+  },
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./"],
+      "alias": {
+        "@": "./"
+      }
+    }]
+  ]
 }

@@ -2,51 +2,82 @@
   <section>
     <div>
       <div>{{ rank }}</div>
-      <h3>{{ islandName }}{{ keep }}{{ beginner }}</h3>
-      <div>{{ monster }}{{ soccer }}</div>
-      <div>{{ prize }}{{ viking }}</div>
-      <div>{{ zins }}</div>
+      <h3>
+        {{ islandName }}
+        <img v-if="keep" />
+        <img v-if="beginner" />
+      </h3>
+      <div>
+        <img v-if="monster > 0" />
+        <img v-if="soccer !== null && soccer.team > 0" />
+      </div>
+      <div>
+        <img v-if="prizes !== null" />
+        <img v-if="soccer.team > 0" />
+      </div>
+      <div>
+        <img v-if="zins !== null" />
+      </div>
       <div>前ターン比</div>
     </div>
     <div>
       <dl class="properties">
         <div v-for="prop in properties" :key="prop.key">
           <dt>{{ prop.key }}</dt>
-          <dd>{{ prop.value }}</dd>
+          <dd v-if="!Array.isArray(prop.value)">{{ prop.value }}</dd>
+          <dd v-if="Array.isArray(prop.value)">
+            <span v-for="p in prop.value" :key="p.id">
+              {{ p.name }}
+            </span>
+          </dd>
         </div>
       </dl>
       <div class="p-1 text-left">items:</div>
-      <div class="p-1 pt-0 text-left">{{ author }}: {{ comments }}</div>
+      <div class="p-1 pt-0 text-left">{{ author }}: {{ comment }}</div>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { PropType } from 'vue'
+import { IslandDetail } from '@/types'
+
+
 export default Vue.extend({
-  data() {
-    return {
-      rank: 1,
-      islandName: 'foobar',
-      properties: [
-        { key: '得点', value: '7680192' },
-        { key: '人口', value: '	3612000人' },
-        { key: '領土', value: '138mi2' },
-        { key: '天気', value: '晴れ☀' },
-        { key: '資金', value: '推定100000億円' },
-        { key: '食料', value: '9999900トン' },
-        { key: '失業率', value: '-157%' },
-        { key: '農場規模', value: '1038000人' },
-        { key: '工場規模', value: '保有せず' },
-        { key: '商業規模', value: '1786000人' },
-        { key: '採掘場規模', value: '425000人' },
-        { key: '発電所規模', value: '60540kW' },
-        { key: '電力供給率', value: '570%' },
-        { key: '人工衛星', value: '●●●●' }
-      ],
-      author: 'author',
-      comments: 'commentscomments'
-    }
+  props: {
+    rank: Number,
+    islandName: String,
+    keep: Boolean,
+    beginner: Boolean,
+    monster: Number,
+    soccer: Object as PropType<IslandDetail['soccer']>,
+    prizes: Array as PropType<IslandDetail['prizes']>,
+    viking: Number,
+    zins: Array as PropType<IslandDetail['zins']>,
+    prevTurnRatio: Object as PropType<{
+      point: number
+      population: number
+      bill: number
+      ration: number
+    }>,
+    items: Array as PropType<IslandDetail['items']>,
+    author: String,
+    comment: String,
+    properties: Array,
+    point: Number,
+    population: Number,
+    territory: Number,
+    weather: String as PropType<IslandDetail['weather']>,
+    bill: Number,
+    ration: Number,
+    employmentRate: Number,
+    agriculture: Number,
+    industry: Number,
+    commerse: Number,
+    mine: Number,
+    powerhouse: Number,
+    powersupplyRate: Number,
+    satelites: Array as PropType<IslandDetail['satelites']>
   }
 })
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div>
-      <IslandInfo />
-      <IslandInfo />
+      <IslandInfo v-bind="island" />
+      <IslandInfo v-bind="island" />
     </div>
   </div>
 </template>
@@ -10,10 +10,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import IslandInfo from '~/components/IslandInfo.vue'
+import islandDetail from '~/../test/islandDetail'
+import format2ViewableStyleThatIslandDetail from '~/scripts/format2ViewableStyleThatIslandDetail'
 
 export default Vue.extend({
   components: {
     IslandInfo
+  },
+  data() {
+    return {
+      island: format2ViewableStyleThatIslandDetail(islandDetail)
+    }
   }
 })
 </script>
