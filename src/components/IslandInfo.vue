@@ -4,7 +4,7 @@
       <div>{{ rank }}</div>
       <h3>
         {{ islandName }}
-        <img v-if="keep" />
+        <font-awesome-icon v-if="keep" icon="snowflake" />
         <img v-if="beginner" />
       </h3>
       <div>
@@ -25,7 +25,7 @@
         <div v-for="prop in properties" :key="prop.key">
           <dt>{{ prop.key }}</dt>
           <dd v-if="!Array.isArray(prop.value)">{{ prop.value }}</dd>
-          <dd v-if="Array.isArray(prop.value)">
+          <dd v-else>
             <span v-for="p in prop.value" :key="p.id">
               {{ p.name }}
             </span>
@@ -41,7 +41,6 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue'
 import { IslandDetail } from '@/types'
-
 
 export default Vue.extend({
   props: {
