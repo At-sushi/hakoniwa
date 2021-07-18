@@ -647,7 +647,7 @@ class Hako
     public $defaultTarget; // 目標補足用ターゲット
     private $data;         // データ処理用クラス
 
-    function __construct()
+    public function __construct()
     {
         $data = new File();
     }
@@ -1279,7 +1279,7 @@ class HakoEdit
 {
     private $data;          // データ処理用クラス
 
-    function __construct()
+    public function __construct()
     {
         $data = new File();
     }
