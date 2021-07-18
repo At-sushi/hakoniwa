@@ -645,13 +645,14 @@ class Hako
     public $islandList;    // 島リスト
     public $targetList;    // ターゲットの島リスト
     public $defaultTarget; // 目標補足用ターゲット
-    private $data = new File();
+    private $data = null;  // データ処理用クラス
 
     public function readIslands(&$cgi)
     {
         global $init;
 
 
+        if ($data == null) $data = new File();
         $m = $data->readIslandsFile($cgi);
         $this->islandList = $data->getIslandList(($cgi->dataSet['defaultID'] ?? ""));
         if ($init->targetIsland == 1) {
@@ -1241,11 +1242,12 @@ class HakoBF
     public $islandListNoBF; // 普通の島リスト
     public $islandListBF;   // BFな島リスト
     private $nil_list = '<option disabled>（変更可能な島はありません）</option>';
-    private $data = new File();
+    private $data;          // データ処理用クラス
 
     public function init($cgi): void
     {
         global $init;
+        $data = new File();
         $this->islandListNoBF = '';
         $this->islandListBF = '';
 
@@ -1271,12 +1273,13 @@ class HakoBF
 
 class HakoEdit
 {
-    private $data = new File();
+    private $data = null;          // データ処理用クラス
 
     public function readIslands(&$cgi)
     {
         global $init;
 
+        if ($data == null) $data = new File();
         return $data->readIslandsFile($cgi);
     }
 
@@ -1790,11 +1793,12 @@ class HakoEdit
 class HakoPresent
 {
     public $islandList; // 島リスト
-    private $data = new File();
+    private $data;          // データ処理用クラス
 
     public function init($cgi): void
     {
         global $init;
+        $data = new File();
         $data->readIslandsFile($cgi);
         $data->readPresentFile();
 
@@ -1812,11 +1816,12 @@ class HakoKP
     public $islandListNoKP; // 普通の島リスト
     public $islandListKP;   // 預かり島リスト
     private $nil_list = '<option disabled>（変更可能な島はありません）</option>';
-    private $data = new File();
+    private $data;          // データ処理用クラス
 
     public function init($cgi): void
     {
         global $init;
+        $data = new File();
         $data->readIslandsFile($cgi);
         $this->islandListNoKP = '';
         $this->islandListKP = '';
