@@ -645,14 +645,18 @@ class Hako
     public $islandList;    // 島リスト
     public $targetList;    // ターゲットの島リスト
     public $defaultTarget; // 目標補足用ターゲット
-    private $data = null;  // データ処理用クラス
+    private $data;         // データ処理用クラス
+
+    function __construct()
+    {
+        $data = new File();
+    }
 
     public function readIslands(&$cgi)
     {
         global $init;
 
 
-        if ($data == null) $data = new File();
         $m = $data->readIslandsFile($cgi);
         $this->islandList = $data->getIslandList(($cgi->dataSet['defaultID'] ?? ""));
         if ($init->targetIsland == 1) {
@@ -1273,13 +1277,17 @@ class HakoBF
 
 class HakoEdit
 {
-    private $data = null;          // データ処理用クラス
+    private $data;          // データ処理用クラス
 
+    function __construct()
+    {
+        $data = new File();
+    }
+    
     public function readIslands(&$cgi)
     {
         global $init;
 
-        if ($data == null) $data = new File();
         return $data->readIslandsFile($cgi);
     }
 
