@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - 7
+before_script:
+  - sudo apt-get update
+  - sudo apt-get -y install php7.3 nginx wget php-cli php-zip unzip
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+  - npm install
+script:
+  - npm test
