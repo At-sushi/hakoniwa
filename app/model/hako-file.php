@@ -640,26 +640,25 @@ class File
 }
 
 
-class Hako
+class Hako extends File
 {
     public $islandList;    // 島リスト
     public $targetList;    // ターゲットの島リスト
     public $defaultTarget; // 目標補足用ターゲット
-    private $data = new File();
 
     public function readIslands(&$cgi)
     {
         global $init;
 
 
-        $m = $data->readIslandsFile($cgi);
-        $this->islandList = $data->getIslandList(($cgi->dataSet['defaultID'] ?? ""));
+        $m = $this->readIslandsFile($cgi);
+        $this->islandList = $this->getIslandList(($cgi->dataSet['defaultID'] ?? ""));
         if ($init->targetIsland == 1) {
             // 目標の島 所有の島が選択されたリスト
             $this->targetList = $this->islandList;
         } else {
             // 順位がTOPの島が選択された状態のリスト
-            $this->targetList = $data->getIslandList($cgi->dataSet['defaultTarget']);
+            $this->targetList = $this->getIslandList($cgi->dataSet['defaultTarget']);
         }
 
         return $m;
@@ -672,11 +671,11 @@ class Hako
         global $init;
 
         $list = "";
-        for ($i = 0; $i < $data->islandNumber; $i++) {
+        for ($i = 0; $i < $this->islandNumber; $i++) {
             // 同盟マークを追加
-            $name = $init->allyUse ? Util::islandName($data->islands[$i], $data->ally, $data->idToAllyNumber) : $data->islands[$i]['name'] . $init->nameSuffix;
+            $name = $init->allyUse ? Util::islandName($this->islands[$i], $this->ally, $this->idToAllyNumber) : $this->islands[$i]['name'] . $init->nameSuffix;
 
-            $id = $data->islands[$i]['id'];
+            $id = $this->islands[$i]['id'];
 
             // 攻撃目標をあらかじめ自分の島にする
             if (empty($this->defaultTarget)) {
@@ -791,7 +790,7 @@ class Hako
             case $init->landShip:
                 // 船舶
                 $ship = Util::navyUnpack($lv);
-                $owner = $data->idToName[$ship[0]] ?? ''; // 所属
+                $owner = $this->idToName[$ship[0]] ?? ''; // 所属
                 $naviTitle = $init->shipName[$ship[1]]; // 船舶の種類
                 $hp = round(100 - $ship[2] / $init->shipHP[$ship[1]] * 100); // 破損率
                 if ($ship[1] <= 1) {
@@ -1211,8 +1210,8 @@ class Hako
                 }
 
                 // 硬化中?
-                if ((($special & 0x4)  && (($data->islandTurn % 2) == 1)) ||
-                     (($special & 0x10) && (($data->islandTurn % 2) == 0))) {
+                if ((($special & 0x4)  && (($this->islandTurn % 2) == 1)) ||
+                     (($special & 0x10) && (($this->islandTurn % 2) == 0))) {
                     // 硬化中
                     $image = $init->monsterImage[$monsSpec['kind']];
                 }
@@ -1236,12 +1235,11 @@ class Hako
 /**
  * バトルフィールド
  */
-class HakoBF
+class HakoBF extends File
 {
     public $islandListNoBF; // 普通の島リスト
     public $islandListBF;   // BFな島リスト
     private $nil_list = '<option disabled>（変更可能な島はありません）</option>';
-    private $data = new File();
 
     public function init($cgi): void
     {
@@ -1249,35 +1247,33 @@ class HakoBF
         $this->islandListNoBF = '';
         $this->islandListBF = '';
 
-        $data->readIslandsFile($cgi);
-        for ($i = 0; $i < ($data->islandNumberNoBF); $i++) {
-            $name = $data->islands[$i]['name'];
-            $id = $data->islands[$i]['id'];
+        $this->readIslandsFile($cgi);
+        for ($i = 0; $i < ($this->islandNumberNoBF); $i++) {
+            $name = $this->islands[$i]['name'];
+            $id = $this->islands[$i]['id'];
             $this->islandListNoBF .= '<option value="'.$id.'">'.$name.$init->nameSuffix.'</option>'.PHP_EOL;
         }
-        for ($i = $data->islandNumberNoBF; $i < $data->islandNumber; $i++) {
-            $name = $data->islands[$i]['name'];
-            $id = $data->islands[$i]['id'];
+        for ($i = $this->islandNumberNoBF; $i < $this->islandNumber; $i++) {
+            $name = $this->islands[$i]['name'];
+            $id = $this->islands[$i]['id'];
             $this->islandListBF .= '<option value="'.$id.'">'.$name.$init->nameSuffix.'</option>'.PHP_EOL;
         }
         if ($this->islandListNoBF === '') {
-            $this->islandListNoBF = $data->nil_list;
+            $this->islandListNoBF = $this->nil_list;
         }
         if ($this->islandListBF === '') {
-            $this->islandListBF = $data->nil_list;
+            $this->islandListBF = $this->nil_list;
         }
     }
 }
 
-class HakoEdit
+class HakoEdit extends File
 {
-    private $data = new File();
-
     public function readIslands(&$cgi)
     {
         global $init;
 
-        return $data->readIslandsFile($cgi);
+        return $this->readIslandsFile($cgi);
     }
 
     //---------------------------------------------------
@@ -1337,8 +1333,8 @@ class HakoEdit
             case $init->landShip:
                 // 船舶
                 $ship = Util::navyUnpack($lv);
-                $owner = $data->idToName[$ship[0]]; // 所属
-                $naviTitle = $data->shipName[$ship[1]]; // 船舶の種類
+                $owner = $this->idToName[$ship[0]]; // 所属
+                $naviTitle = $init->shipName[$ship[1]]; // 船舶の種類
                 $hp = round(100 - $ship[2] / $init->shipHP[$ship[1]] * 100); // 破損率
                 if ($ship[1] <= 1) {
                     // 輸送船、漁船
@@ -1765,8 +1761,8 @@ class HakoEdit
                 }
 
                 // 硬化中?
-                if ((($special & 0x4) && (($data->islandTurn % 2) == 1)) ||
-                     (($special & 0x10) && (($data->islandTurn % 2) == 0))) {
+                if ((($special & 0x4) && (($this->islandTurn % 2) == 1)) ||
+                     (($special & 0x10) && (($this->islandTurn % 2) == 0))) {
                     // 硬化中
                     $image = $init->monsterImage[$monsSpec['kind']];
                 }
@@ -1787,44 +1783,42 @@ class HakoEdit
     }
 }
 
-class HakoPresent
+class HakoPresent extends File
 {
     public $islandList; // 島リスト
-    private $data = new File();
 
     public function init($cgi): void
     {
         global $init;
-        $data->readIslandsFile($cgi);
-        $data->readPresentFile();
+        $this->readIslandsFile($cgi);
+        $this->readPresentFile();
 
         $this->islandList = '<option value="0"></option>'.PHP_EOL;
-        for ($i = 0; $i < ($data->islandNumber); $i++) {
-            $name = $data->islands[$i]['name'];
-            $id   = $data->islands[$i]['id'];
+        for ($i = 0; $i < ($this->islandNumber); $i++) {
+            $name = $this->islands[$i]['name'];
+            $id   = $this->islands[$i]['id'];
             $this->islandList .= '<option value="'.$id.'">'.$name.$init->nameSuffix.'</option>'.PHP_EOL;
         }
     }
 }
 
-class HakoKP
+class HakoKP extends File
 {
     public $islandListNoKP; // 普通の島リスト
     public $islandListKP;   // 預かり島リスト
     private $nil_list = '<option disabled>（変更可能な島はありません）</option>';
-    private $data = new File();
 
     public function init($cgi): void
     {
         global $init;
-        $data->readIslandsFile($cgi);
+        $this->readIslandsFile($cgi);
         $this->islandListNoKP = '';
         $this->islandListKP = '';
 
-        for ($i = 0; $i < $data->islandNumber; $i++) {
-            $name = $data->islands[$i]['name'];
-            $id = $data->islands[$i]['id'];
-            $keep = $data->islands[$i]['keep'];
+        for ($i = 0; $i < $this->islandNumber; $i++) {
+            $name = $this->islands[$i]['name'];
+            $id = $this->islands[$i]['id'];
+            $keep = $this->islands[$i]['keep'];
             if ($keep == 1) {
                 $this->islandListKP .= '<option value="'.$id.'">'.$name.$init->nameSuffix.'</option>'.PHP_EOL;
             } else {
@@ -1832,10 +1826,10 @@ class HakoKP
             }
         }
         if ($this->islandListNoKP === '') {
-            $this->islandListNoKP = $data->nil_list;
+            $this->islandListNoKP = $this->nil_list;
         }
         if ($this->islandListKP === '') {
-            $this->islandListKP = $data->nil_list;
+            $this->islandListKP = $this->nil_list;
         }
     }
 }
