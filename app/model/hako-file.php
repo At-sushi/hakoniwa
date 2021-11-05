@@ -100,7 +100,7 @@ class File
      * @param  [type] $num [description]
      * @return [type]      [description]
      */
-    public function readIsland($fp, $num)
+    private function readIsland($fp, $num)
     {
         global $init;
 
@@ -326,7 +326,7 @@ class File
     //--------------------------------------------------
     // 同盟ひとつ読みこみ
     //--------------------------------------------------
-    public function readAlly($fp)
+    private function readAlly($fp)
     {
         $name = rtrim(fgets($fp, READ_LINE));
         $mark = rtrim(fgets($fp, READ_LINE));
@@ -400,7 +400,7 @@ class File
      * @param  [type] $island [description]
      * @return [type]         [description]
      */
-    public function writeIsland($fp, $num, $island)
+    private function writeIsland($fp, $num, $island)
     {
         global $init;
 
